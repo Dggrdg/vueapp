@@ -43,4 +43,8 @@
 <script lang="ts" setup>
 
 </script>
-<style></style>
+<style scope>
+.grey {
+    background-color: #b8b8b8;
+}
+</style>
