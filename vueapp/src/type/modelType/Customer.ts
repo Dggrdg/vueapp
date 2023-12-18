@@ -1,4 +1,4 @@
-export interface Customer {
+export type Customer = {
     name: string,
     password: string,
     ID: number,

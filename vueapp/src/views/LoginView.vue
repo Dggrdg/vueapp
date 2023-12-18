@@ -1,58 +1,66 @@
 <template>
-    <div class="row">
-        <div class="col-12">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">帳號</span>
-                <input type="text" class="form-control" placeholder="請輸入帳號" aria-label="Username"
-                    aria-describedby="basic-addon1" v-model="accountValue">
-            </div>
+    <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-12">
+            <label for="validationCustom01" class="form-label">帳號</label>
+            <input type="text" class="form-control" id="validationCustom01" v-model="accountValue" required>
+        </div>
+        <div class="col-md-12">
+            <label for="validationCustom02" class="form-label">密碼</label>
+            <input type="text" class="form-control" id="validationCustom02" v-model="passwordValue" required>
         </div>
         <div class="col-12">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">密碼</span>
-                <input type="text" class="form-control" placeholder="請輸入密碼" aria-label="Username"
-                    aria-describedby="basic-addon1" v-model="passwordValue">
-            </div>
+            <button class="btn btn-primary" type="submit">登入</button>
         </div>
-        <div class="col-12">
-            <button type="button" class="btn btn-primary" @click="Login">登入</button>
-        </div>
-    </div>
+    </form>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, onBeforeMount, onUpdated } from 'vue'
-import { type Customer } from "../type/Customer"
+import { ref, reactive, onMounted, onBeforeMount, onUpdated } from 'vue'
+import { type Customer } from "../type/modelType/Customer"
 import axios from 'axios';
 
-let user = ref<Customer>();
+let user = reactive([]);
 let accountValue = ref();
 let passwordValue = ref();
 
-const Login = async () => {
-    try {
-        const response = await axios.get('localhost:8080/home/login');
+let customer: Customer = reactive({
+    ID: 0,
+    name: "",
+    password: "",
+    birthday: ""
+})
 
-    } catch (error) {
-        console.log(error);
-        alert("帳號或密碼錯誤")
+
+onMounted(() => {
+})
+
+onUpdated(() => {
+    console.log(user);
+
+    customer.name = accountValue.value;
+    customer.password = passwordValue.value;
+    valid(customer);
+})
+
+const valid = (customer: Customer): boolean => {
+    if (customer.name && customer.password) {
+        console.log("錯誤");
+        return false;
+    } else {
+        console.log("正確");
+        return true;
     }
 }
 
+const Login = async () => {
 
-// onMounted(() => {
-//     console.log('onMounted');
+    axios.get("http://localhost:8080/home/login")
+        .then(response => {
+            console.log(response);
 
-//     axios.get('http://localhost:8080/search/search')
-//         .then(
-//             response => {
-//                 pepole.value = response.data
-//                 console.log("people = " + pepole);
-//                 return pepole;
-//             }
-//         ).catch(error => {
-//             console.log(error);
-//         })
-// })
+        }).catch(error => {
+            console.log(error);
+        })
+}
 
 onBeforeMount(() => {
     console.log("onBeforeMount");
