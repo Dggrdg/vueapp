@@ -1,6 +1,6 @@
 export type Customer = {
+    ID: number,
     name: string,
     password: string,
-    ID: number,
     birthday: string
 }

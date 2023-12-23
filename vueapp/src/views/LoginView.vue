@@ -12,7 +12,7 @@
                         <input type="text" class="form-control" id="validationCustom02" v-model="passwordValue" required>
                     </div>
                     <div class="col-md-12 text-center">
-                        <button class="btn btn-primary" type="submit">登入</button>
+                        <button class="btn btn-primary" @click="Login">登入</button>
                     </div>
                 </form>
             </div>
@@ -24,56 +24,31 @@ import { ref, reactive, onMounted, onBeforeMount, onUpdated } from 'vue'
 import { type Customer } from "../type/modelType/Customer"
 import axios from 'axios'
 
-let user = reactive([]);
-let accountValue = ref();
-let passwordValue = ref();
+let accountValue = ref('');
+let passwordValue = ref('');
 
-let customer: Customer = reactive({
+const userData: Customer = {
     ID: 0,
-    name: "",
-    password: "",
+    name: accountValue.value,
+    password: passwordValue.value,
     birthday: ""
-})
-
-
-onMounted(() => {
-})
-
-onUpdated(() => {
-    console.log(user);
-
-    customer.name = accountValue.value;
-    customer.password = passwordValue.value;
-    valid(customer);
-})
-
-const valid = (customer: Customer): boolean => {
-    if (customer.name && customer.password) {
-        console.log("錯誤");
-        return false;
-    } else {
-        console.log("正確");
-        return true;
-    }
 }
 
 const Login = async () => {
 
-    axios.get("http://localhost:8080/home/login")
-        .then(response => {
-            console.log(response);
+    userData.name = accountValue.value;
+    userData.password = passwordValue.value;
 
-        }).catch(error => {
-            console.log(error);
-        })
+    console.log(userData);
+
+
+    const response = await axios.post('http://localhost:8080/home/Login', userData);
+    console.log(response.data.name);
+    console.log("成功");
+
+    return response;
+
 }
 
-onBeforeMount(() => {
-    console.log("onBeforeMount");
-})
-
-onUpdated(() => {
-    console.log('onUpdated');
-})
 </script>
 <style></style>
