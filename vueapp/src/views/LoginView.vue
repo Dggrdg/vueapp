@@ -23,7 +23,6 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted, onBeforeMount, onUpdated } from 'vue'
-import { type Customer } from "../type/modelType/Customer"
 import axios from 'axios'
 
 const userData = reactive({
@@ -33,22 +32,16 @@ const userData = reactive({
     birthday: ''
 });
 
-const Login = async () => {
-
+const Login = async (event: any) => {
+    event.preventDefault();
     userData.name = userData.name;
     userData.password = userData.password
 
-    console.log(userData);
-
+    console.log("userData = " + JSON.stringify(userData));
 
     const response = await axios.post('http://localhost:8080/home/Login', userData);
-    console.log(response.data.name);
-    console.log("成功");
+    alert('登入成功');
 }
-
-onMounted(() => {
-    console.log("onMounted");
-})
 
 </script>
 <style></style>
