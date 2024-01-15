@@ -22,7 +22,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeMount, onUpdated } from 'vue'
+import { reactive, onMounted } from 'vue'
 import axios from 'axios'
 
 const userData = reactive({
@@ -40,8 +40,14 @@ const Login = async (event: any) => {
     console.log("userData = " + JSON.stringify(userData));
 
     const response = await axios.post('http://localhost:8080/home/Login', userData);
-    alert('登入成功');
+
 }
+
+onMounted(() => {
+    const A = () => {
+        console.log("A");
+    }
+})
 
 </script>
 <style></style>
