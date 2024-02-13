@@ -22,32 +22,43 @@
     </div>
 </template>
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, watch, ref } from 'vue'
+import { type DataForm } from "../Test/DataForm"
 import axios from 'axios'
 
 const userData = reactive({
-    id: 0,
     name: '',
     password: '',
-    birthday: ''
-});
+}) as DataForm
 
 const Login = async (event: any) => {
     event.preventDefault();
-    userData.name = userData.name;
-    userData.password = userData.password
-
-    console.log("userData = " + JSON.stringify(userData));
 
     const response = await axios.post('http://localhost:8080/home/Login', userData);
 
+    console.log(response);
+
+    if (response.data.password != null && response.data.name != null) {
+        console.log("登入成功");
+    } else {
+        console.log("登入失敗");
+    }
 }
 
-onMounted(() => {
-    const A = () => {
-        console.log("A");
-    }
-})
+
+
+// function Test(callback: any) {
+//     callback();
+// }
+
+// function Hello() {
+//     console.log("hello");
+// }
+
+// onMounted(() => {
+//     Test(Hello);
+// }),
+
 
 </script>
 <style></style>

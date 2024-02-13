@@ -9,10 +9,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="http://localhost:5173/Home">Home</a>
+                        <a class="nav-link active" aria-current="page" href="http://localhost:5173/Home">主頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost:5173/Login" @click="NavBarShow()">Login</a>
+                        <a class="nav-link" href="http://localhost:5173/Login" @click="NavBarShow()">登入</a>
                     </li>
                 </ul>
             </div>
