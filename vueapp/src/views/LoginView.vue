@@ -19,7 +19,7 @@
                 </form>
             </div>
         </div>
-        <Alert v-if="showAlert" />
+        <Alert v-if="showAlert" :errorMessage="errorMessage" />
     </div>
 </template>
 <script setup lang="ts">
@@ -38,6 +38,8 @@ const test: data = data.example2
 
 const showAlert = ref(false);
 
+const errorMessage = ref('');
+
 const Login = async (event: any) => {
     event.preventDefault();
 
@@ -55,9 +57,11 @@ const Login = async (event: any) => {
         console.log("登入失敗");
         showAlert.value = true;
 
-        // setTimeout(() => {
-        //     showAlert.value = false;
-        // }, 3000)
+        errorMessage.value = "登入失敗";
+
+        setTimeout(() => {
+            showAlert.value = false;
+        }, 3000)
     }
 }
 
