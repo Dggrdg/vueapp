@@ -19,17 +19,24 @@
                 </form>
             </div>
         </div>
+        <Alert v-if="showAlert" />
     </div>
 </template>
 <script setup lang="ts">
 import { reactive, onMounted, watch, ref } from 'vue'
 import { type DataForm } from "../Test/DataForm"
 import axios from 'axios'
+import { data } from "../Test/FormType"
+import Alert from '@/common_component/Alert.vue'
 
-const userData = reactive({
+const userData: DataForm = reactive({
     name: '',
     password: '',
-}) as DataForm
+})
+
+const test: data = data.example2
+
+const showAlert = ref(false);
 
 const Login = async (event: any) => {
     event.preventDefault();
@@ -38,14 +45,21 @@ const Login = async (event: any) => {
 
     console.log(response);
 
+    console.log(test);
+
+
     if (response.data.password != null && response.data.name != null) {
         console.log("登入成功");
+        showAlert.value = false;
     } else {
         console.log("登入失敗");
+        showAlert.value = true;
+
+        // setTimeout(() => {
+        //     showAlert.value = false;
+        // }, 3000)
     }
 }
-
-
 
 // function Test(callback: any) {
 //     callback();
