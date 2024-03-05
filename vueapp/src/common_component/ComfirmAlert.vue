@@ -20,9 +20,6 @@ const props = defineProps({
     errorComfirmMessage: String
 });
 
-function closeAlert() {
-    showAlert.value = false;
-}
 </script>
   
 <style scoped>
