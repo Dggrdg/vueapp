@@ -20,6 +20,7 @@
             </div>
         </div>
         <Alert v-if="showAlert" :errorMessage="errorMessage" />
+        <ComfirmAlert v-if="showComfirmAlert" :errorComfirmMessage="errorComfirmMessage" />
     </div>
 </template>
 <script setup lang="ts">
@@ -28,6 +29,7 @@ import { type DataForm } from "../Test/DataForm"
 import axios from 'axios'
 import { data } from "../Test/FormType"
 import Alert from '@/common_component/Alert.vue'
+import ComfirmAlert from '@/common_component/ComfirmAlert.vue'
 
 const userData: DataForm = reactive({
     name: '',
@@ -38,7 +40,13 @@ const test: data = data.example2
 
 const showAlert = ref(false);
 
+const showComfirmAlert = ref(false)
+
 const errorMessage = ref('');
+
+const errorComfirmMessage = ref('')
+
+let failCount: number = 0;
 
 const Login = async (event: any) => {
     event.preventDefault();
@@ -62,6 +70,17 @@ const Login = async (event: any) => {
         setTimeout(() => {
             showAlert.value = false;
         }, 3000)
+
+        failCount++
+
+        console.log("登入失敗次數" + failCount);
+
+        if (failCount >= 3) {
+            errorComfirmMessage.value = "是否忘記帳號密碼?";
+            showComfirmAlert.value = true;
+            showAlert.value = false;
+        }
+
     }
 }
 
